@@ -1,8 +1,9 @@
 import pygame
 import math
 
-BLACK = (0, 0, 0, 0)
-WHITE = (255, 255, 255, 255)
+BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)
+RED = (255, 0, 0)
 
 def main():
 	screensize = [500, 500]
@@ -28,16 +29,30 @@ def main():
 		for i in range(1,7):
 			pts.append(hexpoint(center, hexside, i))
 
-#		pygame.draw.polygon(screen, BLACK, [[100, 100], [0, 200], [200, 200]], 5)
 		pygame.draw.polygon(screen, BLACK, pts, 1)
+
+		adjsize = (hexside * 1.75)
 		
-		center = [center[0] + hexside * 1.5, center[1] + hexside]
+		testdeg = 90
+		testrad = math.radians(testdeg)
+		testpt = [center[0] + adjsize * math.cos(testrad), center[1] + adjsize * math.sin(testrad)]
+		
+		pygame.draw.polygon(screen, RED, [center, testpt], 1)
 		
 		pts = []
 		for i in range(1,7):
-			pts.append(hexpoint(center, hexside, i))
+			pts.append(hexpoint(testpt, hexside, i))
 
 		pygame.draw.polygon(screen, BLACK, pts, 1)
+		
+		
+		# center = [center[0] + hexside * 1.5, center[1] + hexside]
+		
+		# pts = []
+		# for i in range(1,7):
+			# pts.append(hexpoint(center, hexside, i))
+
+		# pygame.draw.polygon(screen, BLACK, pts, 1)
 		
 		pygame.display.flip()
 		
@@ -45,8 +60,7 @@ def main():
 
 
 def hexpoint(center, size, cornerindex):
-	angledeg = 60 * cornerindex
-	anglerad = math.pi / 180 * angledeg
+	anglerad = math.radians(60 * cornerindex)
 	return [center[0] + size * math.cos(anglerad), center[1] + size * math.sin(anglerad)]
 
 if __name__ == '__main__':

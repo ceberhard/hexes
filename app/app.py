@@ -25,25 +25,27 @@ def main():
 		hexside = 20
 		center = [250, 250]
 		
-		pts = []
-		for i in range(1,7):
-			pts.append(hexpoint(center, hexside, i))
+		# pts = []
+		# for i in range(1,7):
+		#	pts.append(hexpoint(center, hexside, i))
 
-		pygame.draw.polygon(screen, BLACK, pts, 1)
+		# pygame.draw.polygon(screen, BLACK, pts, 1)
+		drawhex(screen, center, hexside)
 
 		adjsize = (hexside * 1.75)
 		
-		testdeg = 90
-		testrad = math.radians(testdeg)
-		testpt = [center[0] + adjsize * math.cos(testrad), center[1] + adjsize * math.sin(testrad)]
-		
-		pygame.draw.polygon(screen, RED, [center, testpt], 1)
-		
-		pts = []
-		for i in range(1,7):
-			pts.append(hexpoint(testpt, hexside, i))
+		# testdeg = 90
+		# testrad = math.radians(testdeg)
+		# testpt = [center[0] + adjsize * math.cos(testrad), center[1] + adjsize * math.sin(testrad)]
 
-		pygame.draw.polygon(screen, BLACK, pts, 1)
+		for i in range(1,7):
+			testpt = hexpoint(center, adjsize, i, shift=30)
+			pygame.draw.polygon(screen, RED, [center, testpt], 1)
+			# pts = []
+			# for i in range(1,7):
+			# 	pts.append(hexpoint(testpt, hexside, i))
+			# pygame.draw.polygon(screen, BLACK, pts, 1)
+			drawhex(screen, testpt, hexside)
 		
 		
 		# center = [center[0] + hexside * 1.5, center[1] + hexside]
@@ -58,9 +60,14 @@ def main():
 		
 	pygame.quit()
 
+def drawhex(screen, center, sidelength):
+	pts = []
+	for i in range(1,7):
+		pts.append(hexpoint(center, sidelength, i))
+	pygame.draw.polygon(screen, BLACK, pts, 1)
 
-def hexpoint(center, size, cornerindex):
-	anglerad = math.radians(60 * cornerindex)
+def hexpoint(center, size, cornerindex, shift = 0):
+	anglerad = math.radians((60 * cornerindex) + shift)
 	return [center[0] + size * math.cos(anglerad), center[1] + size * math.sin(anglerad)]
 
 if __name__ == '__main__':
